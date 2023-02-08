@@ -170,39 +170,123 @@ int nwddzielenie(int a, int b) {
     while (a != 0 && b != 0) {
         if (a > b) {
             a = a % b;
-            cout<<"1 "<<a<<" "<<b<<endl;
+            cout << "1 " << a << " " << b << endl;
         } else {
             b = b % a;
-            cout<<"2 "<<a<<" "<<b<<endl;
+            cout << "2 " << a << " " << b << endl;
         }
 
     }
     if (a != 0) {
-        cout<<"3 "<<a<<" "<<b<<endl;
+        cout << "3 " << a << " " << b << endl;
         return a;
     } else {
-        cout<<"4 "<<a<<" "<<b<<endl;
+        cout << "4 " << a << " " << b << endl;
         return b;
     }
 }
 
-struct ulam{
+int czynniki(int n = 456) {
+    int d = 2;
+    //zcout<<n<<" = ";
+    while (d * d <= n) {
+        if (n % d == 0) {
+            //cout<<d<<" * ";
+            n = n / d;
+        } else d++;
+    }
+    return n;
+
+}
+
+int nww(int a = 10, int b = 15) {
+
+//    cout<<"Czynniki pierwsze pierwszej liczby - "<<czynniki(a)<<endl;
+//   cout<<"Czynniki pierwsze drugiej liczby - "<<czynniki(b)<<endl;
+    return a * b / nwd(a, b);
+    cout << a << endl;
+    cout << b << endl;
+}
+
+int dodawanie(int licznik, int mianownik) {
+    int l1, l2, m1, m2;
+    mianownik = nww(m1, m2);
+    int i = licznik = mianownik / m1 * l1 + mianownik / m2 * l2;
+
+    licznik /= nwd(i, mianownik);
+    mianownik /= nwd(i, mianownik);
+    cout << l1 << endl;
+    cout << l2 << endl;
+
+
+    cout << l1 << "/" << m1 << " + " << l2 << "/" << m2 << " = " << licznik << "/" << mianownik;
+
+    return 0;
+}
+
+int dodawanie2(int a, int b, int c, int d) {
+    int N = nwd(b, d);
+    int k = b / N;
+    int l = d / N;
+    cout << (k * a + l * c) << " / " << (N * k * l);
+
+}
+
+int potegujaca(int liczba, int potega) {
+    int wynik = 1;
+    for (int i = 0; i < potega; i++) {
+        wynik *= liczba;
+    }
+    return wynik;
+}
+
+int bintodec(string a) {
+    int potega = 0;
+    int wynik = 0;
+    for (int i = a.length() - 1; i >= 0; i--) {
+        wynik += ((int) a[i] - 48) * potegujaca(2, potega);
+        potega++;
+    }
+    return wynik;
+}
+
+string dectobin(int liczba) {
+    string a = "";
+    while (liczba != 0) {
+        a+= (char) (liczba % 2 + 48));
+        liczba=liczba/2;
+    }
+}
+string odwrocony(string a){
+    string wynik="";
+    for(int i = a.length(); i >= 0; i--){
+        a=wynik
+    }
+}
+
+
+struct ulam {
     int licz;
     int mian;
     string nazwa;
 };
 
 int main() {
-    int wynik = nwd(14, 10);
+
+    int wynik = bintodec("01001110");
+    cout << wynik << endl;
+//    cout<<potegujaca(2,10)<<endl;
+    return 0;
+//    int wynik = nwd(14, 10);
 //    cout << wynik;
-    ulam a;
-    a.licz=196;
-    a.mian=42;
-    a.nazwa="Jas";
-    int wynik2=nwddzielenie(a.licz, a.mian);
-    a.mian=a.mian/wynik2;
-    a.licz=a.licz/wynik2;
-    cout<<a.licz<< "/" <<a.mian;
+//    ulam a;
+//    a.licz=196;
+//   a.mian=42;
+//    a.nazwa="Jas";
+//    int wynik2=nwddzielenie(a.licz, a.mian);
+//    a.mian=a.mian/wynik2;
+//    a.licz=a.licz/wynik2;
+//    cout<<a.licz<< "/" <<a.mian;
 //    string wynik = permutacyjny("RSUZOCBEYXWILTMJGDQAPNVFHK", "abcd");
 //    cout << wynik << endl;
 //    string ros = permutacyjnyroz("RSUZOCBEYXWILTMJGDQAPNVFHK", wynik);
@@ -212,7 +296,7 @@ int main() {
 //    int *tablica  = sort(array,5);
 //      cout<<tablica[i]<<endl;
 //    }
-    return 0;
+    //   return 0;
 }
 //TODO 1:
 //-plik tekstowy DONE
@@ -222,6 +306,7 @@ int main() {
 // void loopparzyste(string word){.. cout<<}
 // sortowanie bąbelkowe -> przypomnieć co to, posortować tablice
 // int[] sort(int[]){for for}
+
 // strona 126 szyfr permutacyjny z kluczem RSU
 // string szyfrujRSU(string slowo, string klucz)
 
@@ -229,12 +314,12 @@ int main() {
 
 
 //TODO 2:
-// napisac nww
-// napisac dodawanie ulamkow
-// napisac odejmowanie ulamkow
+// napisac nww -poprawa
+// napisac dodawanie ulamkow - poprawa
+// napisac odejmowanie ulamkow - nie ma
 // ulam dodaj (ulam first, ulan second)
 // bin to dec
-// dec to bin
+// dec to bin - ok
 // ispalindrom
-// 6 + zapoznaj się z liczbami losowymi
+// czy liczba jest piewrsza
 // funkcja w zadaniu - klucz który trzeba wsadzić w poprzednią funkcję
