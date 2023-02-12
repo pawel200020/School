@@ -224,13 +224,13 @@ int dodawanie(int licznik, int mianownik) {
     return 0;
 }
 
-int dodawanie2(int a, int b, int c, int d) {
-    int N = nwd(b, d);
-    int k = b / N;
-    int l = d / N;
-    cout << (k * a + l * c) << " / " << (N * k * l);
-
-}
+//int dodawanie2(int a, int b, int c, int d) {
+//    int N = nwd(b, d);
+//    int k = b / N;
+//    int l = d / N;
+//    cout << (k * a + l * c) << " / " << (N * k * l);
+//
+//}
 
 int potegujaca(int liczba, int potega) {
     int wynik = 1;
@@ -249,13 +249,84 @@ int bintodec(string a) {
     }
     return wynik;
 }
+int hex2dec(string a){
+    int potega = 0;
+    int wynik = 0;
+    for (int i = a.length() - 1; i >= 0; i--) {
+        int temp;
+        if(a[i]=='a')
+            temp=10;
+        else if (a[i]=='b')
+            temp=11;
+        else if(a[i]=='c')
+            temp=12;
+        else if(a[i]=='d')
+            temp=13;
+        else if(a[i]=='e')
+            temp=14;
+        else if(a[i]=='f')
+            temp=15;
+        else
+            temp=a[i]-48;
+        wynik += temp * potegujaca(16, potega);
+        potega++;
+    }
+    return wynik;
+
+}
 
 string odwrocony(string a) {
     string wynik = "";
-    for (int i = a.length(); i >= 0; i--) {
-        wynik += a;
+    for (int i = a.length()-1; i >= 0; i--) {
+        wynik += a[i];
     }
     return wynik;
+}
+
+string dec2hex(int liczba){
+    string a="";
+    while (liczba != 0) {
+        int res=liczba%16;
+        if(res==10)
+            a+="a";
+        else if(res==11)
+            a+="b";
+        else if(res==12)
+            a+="c";
+        else if(res==13)
+            a+="d";
+        else if(res==14)
+            a+="e";
+        else if(res==15)
+            a+="f";
+        else
+            a += (char) (liczba % 16 + 48);
+        liczba = liczba / 16;
+    }
+    return odwrocony(a);
+
+}
+
+int bin2any(string a, int system){
+    int potega = 0;
+    int wynik = 0;
+    for (int i = a.length() - 1; i >= 0; i--) {
+        wynik += ((int) a[i] - 48) * potegujaca(system, potega);
+        potega++;
+    }
+    return wynik;
+}
+
+
+
+string dec2any(int liczba, int system){
+    string a = "";
+    while (liczba != 0) {
+        a += (char) (liczba % system + 48);
+        liczba = liczba / system;
+    }
+    return odwrocony(a);
+
 }
 
 string dectobin(int liczba) {
@@ -266,6 +337,7 @@ string dectobin(int liczba) {
     }
     return odwrocony(a);
 }
+
 
 
 struct ulam {
@@ -308,7 +380,26 @@ ulam mnozenie(ulam first, ulam second) {
     first.licz /= nd;
     first.mian /= nd;
     second.licz /= nd2;
-    second.mian /= nd2;;
+    second.mian /= nd2;
+    ulam result;
+    result.licz = first.licz * second.licz;
+    result.mian = first.mian * second.mian;
+    result.licz /= nwd(first.mian, first.licz);
+    result.mian /= nwd(second.licz, second.mian);
+    return result;
+}
+
+ulam dzielenie(ulam first, ulam second) {
+    int nd = nwd(first.mian, first.licz);
+    int nd2 = nwd(second.mian, second.licz);
+    first.licz /= nd;
+    first.mian /= nd;
+    second.licz /= nd2;
+    second.mian /= nd2;
+    int temp;
+    temp = second.licz;
+    second.licz = second.mian;
+    second.mian = temp;
     ulam result;
     result.licz = first.licz * second.licz;
     result.mian = first.mian * second.mian;
@@ -328,19 +419,62 @@ bool isPalindrom(string a) {
     }
     return true;
 }
-bool isPierwsza(int a){
-    for(int i=2; i<=a/2; i++ ){
-        cout<<a<<"|"<<i<<"/"<<a%i<<endl;
-        if(a%i==0){
+
+bool isPierwsza(int a) {
+    for (int i = 2; i <= a / 2; i++) {
+        if (a % i == 0) {
             return false;
         }
     }
     return true;
 }
 
+void Blizniacze(int n) {
+    int licznik = 0;
+    int x = 3;
+    while (licznik < n) {
+        if (isPierwsza(x) && isPierwsza(x + 2)) {
+            cout<<x<<" "<<x+2<<endl;
+            licznik = licznik + 1;
+        }
+        x=x+2;
+    }
+}
+void Blizniacze2(int n){
+    int licznik = 1;
+    if(n>0) {
+        cout << "3 5" << endl;
+    }
+    int x = 5;
+    while(licznik<n){
+        if(isPierwsza(x) && isPierwsza(x+2)) {
+            cout << x << " " << x + 2 << endl;
+            licznik = licznik + 1;
+        }
+        x=x+6;
+    }
+}
+
+
+
 int main() {
-    bool res = isPierwsza(1024);
-    cout<<res<<endl;
+    string a=dec2hex(708401);
+    cout<<a<<endl;
+       return 0;
+
+//    ulam a;
+//    a.licz = 1;
+//    a.mian = 2;
+//    ulam b;
+//    b.licz = 2;
+//    b.mian = 6;
+ //   ulam c = dzielenie(a, b);
+//    cout << c.licz << "/" << c.mian << endl;
+
+}
+//
+//    bool res = isPierwsza(1024);
+//    cout<<res<<endl;
 //    bool res = isPalindrom("aaba");
 //    cout << res << endl;
 //    ulam a;
@@ -352,10 +486,10 @@ int main() {
 //    ulam c=mnozenie(a,b);
 //    cout<<c.licz<<"/"<<c.mian<<endl;
 
-    return 0;
+
 
 //    int wynik = bintodec("01001110");
-    //   cout << wynik << endl;
+//   cout << wynik << endl;
 //    cout<<potegujaca(2,10)<<endl;
 //    return 0;
 //    int wynik = nwd(14, 10);
@@ -377,8 +511,8 @@ int main() {
 //    int *tablica  = sort(array,5);
 //      cout<<tablica[i]<<endl;
 //    }
-    //   return 0;
-}
+//   return 0;
+
 //TODO 1:
 //-plik tekstowy DONE
 //- napisać pętlę która wypisze wszystkie litery w stringu wraz z ich pozycją np "abc" -> a-0,b-1,c-2
@@ -409,5 +543,9 @@ int main() {
 //czy liczby sa blizniacze 81
 //uogólnic oba bin dec
 //dec to 16; 16 to dec
-//dzielenie ułamków
+//dzielenie ułamków V
 //szyfr RSU
+
+
+//TODO 4:
+// Dodowanie odejmowanie, mnożenie i dzielenie w systemie binarnym oraz każdym innym 0-9 oraz w hex
