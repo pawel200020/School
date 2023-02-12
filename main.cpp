@@ -199,7 +199,7 @@ int czynniki(int n = 456) {
 
 }
 
-int nww(int a = 10, int b = 15) {
+int nww(int a, int b) {
 
 //    cout<<"Czynniki pierwsze pierwszej liczby - "<<czynniki(a)<<endl;
 //   cout<<"Czynniki pierwsze drugiej liczby - "<<czynniki(b)<<endl;
@@ -250,18 +250,21 @@ int bintodec(string a) {
     return wynik;
 }
 
+string odwrocony(string a) {
+    string wynik = "";
+    for (int i = a.length(); i >= 0; i--) {
+        wynik += a;
+    }
+    return wynik;
+}
+
 string dectobin(int liczba) {
     string a = "";
     while (liczba != 0) {
-        a+= (char) (liczba % 2 + 48));
-        liczba=liczba/2;
+        a += (char) (liczba % 2 + 48);
+        liczba = liczba / 2;
     }
-}
-string odwrocony(string a){
-    string wynik="";
-    for(int i = a.length(); i >= 0; i--){
-        a=wynik
-    }
+    return odwrocony(a);
 }
 
 
@@ -271,12 +274,90 @@ struct ulam {
     string nazwa;
 };
 
-int main() {
+ulam dodaj(ulam first, ulam second) {
+    int nd = nwd(first.mian, first.licz);
+    int nd2 = nwd(second.mian, second.licz);
+    first.licz /= nd;
+    first.mian /= nd;
+    second.licz /= nd2;
+    second.mian /= nd2;;
+    ulam result;
+    result.licz = first.licz * (second.mian / nwd(first.mian, second.mian)) +
+                  second.licz * (first.mian / nwd(first.mian, second.mian));
+    result.mian = nww(first.mian, second.mian);
+    return result;
+}
 
-    int wynik = bintodec("01001110");
-    cout << wynik << endl;
-//    cout<<potegujaca(2,10)<<endl;
+ulam odejmuj(ulam first, ulam second) {
+    int nd = nwd(first.mian, first.licz);
+    int nd2 = nwd(second.mian, second.licz);
+    first.licz /= nd;
+    first.mian /= nd;
+    second.licz /= nd2;
+    second.mian /= nd2;;
+    ulam result;
+    result.licz = first.licz * (second.mian / nwd(first.mian, second.mian)) -
+                  second.licz * (first.mian / nwd(first.mian, second.mian));
+    result.mian = nww(first.mian, second.mian);
+    return result;
+}
+
+ulam mnozenie(ulam first, ulam second) {
+    int nd = nwd(first.mian, first.licz);
+    int nd2 = nwd(second.mian, second.licz);
+    first.licz /= nd;
+    first.mian /= nd;
+    second.licz /= nd2;
+    second.mian /= nd2;;
+    ulam result;
+    result.licz = first.licz * second.licz;
+    result.mian = first.mian * second.mian;
+    result.licz /= nwd(first.mian, first.licz);
+    result.mian /= nwd(second.licz, second.mian);
+    return result;
+}
+
+bool isPalindrom(string a) {
+    int k = a.length() - 1;
+    for (int i = 0; i < a.length() / 2; i++) {
+        cout << a[i] << "|" << a[k] << endl;
+        if (a[i] != a[k]) {
+            return false;
+        }
+        k--;
+    }
+    return true;
+}
+bool isPierwsza(int a){
+    for(int i=2; i<=a/2; i++ ){
+        cout<<a<<"|"<<i<<"/"<<a%i<<endl;
+        if(a%i==0){
+            return false;
+        }
+    }
+    return true;
+}
+
+int main() {
+    bool res = isPierwsza(1024);
+    cout<<res<<endl;
+//    bool res = isPalindrom("aaba");
+//    cout << res << endl;
+//    ulam a;
+//    a.licz=1;
+//    a.mian=2;
+//    ulam b;
+//    b.licz=2;
+//    b.mian=6;
+//    ulam c=mnozenie(a,b);
+//    cout<<c.licz<<"/"<<c.mian<<endl;
+
     return 0;
+
+//    int wynik = bintodec("01001110");
+    //   cout << wynik << endl;
+//    cout<<potegujaca(2,10)<<endl;
+//    return 0;
 //    int wynik = nwd(14, 10);
 //    cout << wynik;
 //    ulam a;
@@ -314,7 +395,7 @@ int main() {
 
 
 //TODO 2:
-// napisac nww -poprawa
+// napisac nww
 // napisac dodawanie ulamkow - poprawa
 // napisac odejmowanie ulamkow - nie ma
 // ulam dodaj (ulam first, ulan second)
@@ -323,3 +404,10 @@ int main() {
 // ispalindrom
 // czy liczba jest piewrsza
 // funkcja w zadaniu - klucz który trzeba wsadzić w poprzednią funkcję
+
+//TO DO 3;
+//czy liczby sa blizniacze 81
+//uogólnic oba bin dec
+//dec to 16; 16 to dec
+//dzielenie ułamków
+//szyfr RSU
